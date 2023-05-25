@@ -1,0 +1,34 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <rest key="search-resource" path="/issues" version="1.0">
+        <description>Dynamic REST resource for JQL search</description>
+        <param name="package">com.atlassian.plugin</param>
+        <resource name="SearchResource" path="/issues" />
+    </rest>
+
+    <resource type="i18n" name="i18n" location="testTask"/>
+
+    <web-resource key="testTask-resources" name="testTask Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        
+        <resource type="download" name="testTask.css" location="/css/testTask.css"/>
+        <resource type="download" name="testTask.js" location="/js/testTask.js"/>
+
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>testTask</context>
+    </web-resource>
+
+    <web-panel key="jira-rest-search-panel" location="atl.jira.view.issue.right.context" weight="100">
+        <label>Search with JQL</label>
+        <resource name="view" type="velocity" location="/templates/jira-rest-search.vm"/>
+    </web-panel>
+
+</atlassian-plugin>

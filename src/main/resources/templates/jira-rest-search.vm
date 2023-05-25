@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Jira REST Search</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Jira REST Search</h1>
+<div>
+    <label for="jql">JQL:</label>
+    <input type="text" id="jql" name="jql">
+</div>
+<div>
+    <label for="fields">Fields (comma-separated):</label>
+    <input type="text" id="fields" name="fields">
+</div>
+<button id="searchButton">Search</button>
+
+<div id="results"></div>
+
+<script>
+    document.getElementById('jql-search-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const jql = document.getElementById('jql').value;
+        const fields = document.getElementById('fields').value.split(',');
+
+        const data = {
+            jql: jql,
+            fields: fields
+        };
+
+        fetch('http://localhost:2990/jira/rest/issues/1.0/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+    });
+</script>
+</body>
+</html>
